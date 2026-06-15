@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Medial Elbow Pain Walkthrough</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #182027;
+      --muted: #586574;
+      --line: #d8dee6;
+      --paper: #f7f8fa;
+      --panel: #ffffff;
+      --blue: #2563eb;
+      --green: #20735b;
+      --red: #a33d35;
+      --gold: #9a6a18;
+      --shadow: 0 12px 36px rgba(18, 32, 47, 0.11);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.5;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr) minmax(520px, 42vw);
+      min-height: 100vh;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 20px 16px;
+      border-right: 1px solid var(--line);
+      background: #f0f3f6;
+      overflow: auto;
+    }
+
+    .brand {
+      margin: 0 0 18px;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .nav a {
+      display: block;
+      padding: 8px 10px;
+      color: var(--muted);
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .nav a:hover,
+    .nav a:focus-visible {
+      color: var(--ink);
+      background: #ffffff;
+      outline: none;
+    }
+
+    .main {
+      padding: 28px clamp(18px, 4vw, 48px) 56px;
+      width: 100%;
+    }
+
+    .viewer {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 20px;
+      border-left: 1px solid var(--line);
+      background: #fcfcfd;
+      overflow: auto;
+    }
+
+    .viewer-inner {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .viewer-text {
+      padding: 14px 16px 16px;
+    }
+
+    video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #101820;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.06;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 34px 0 12px;
+      font-size: 24px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul,
+    ol {
+      margin: 8px 0 0;
+      padding-left: 22px;
+    }
+
+    li + li {
+      margin-top: 6px;
+    }
+
+    .lede {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0 24px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 30px;
+      padding: 4px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .band {
+      margin: 22px 0;
+      padding: 16px;
+      border-left: 4px solid var(--blue);
+      background: #eef4ff;
+    }
+
+    .band.warning {
+      border-left-color: var(--red);
+      background: #fff1ef;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .rule,
+    .exercise {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .exercise {
+      margin-top: 16px;
+      scroll-margin-top: 24px;
+    }
+
+    .exercise-header {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .tag {
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .clip-button,
+    .source-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      padding: 7px 11px;
+      border: 1px solid var(--blue);
+      border-radius: 6px;
+      background: var(--blue);
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .source-link {
+      border-color: var(--line);
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .clip-button:hover,
+    .clip-button:focus-visible {
+      background: #1d4ed8;
+      outline: none;
+    }
+
+    .source-link:hover,
+    .source-link:focus-visible {
+      border-color: #9aa8ba;
+      outline: none;
+    }
+
+    .dose {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      background: #f5f7f9;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .phase-label {
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .source-note {
+      margin-top: 30px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1280px) {
+      .app {
+        grid-template-columns: 210px minmax(0, 1fr);
+      }
+
+      .viewer {
+        grid-column: 1 / -1;
+        position: static;
+        height: auto;
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .viewer-inner {
+        max-width: 980px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .app {
+        display: block;
+      }
+
+      .nav {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav-links {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 4px;
+      }
+
+      .main {
+        padding: 22px 16px 32px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .exercise-header {
+        display: block;
+      }
+
+      .tag {
+        display: block;
+        margin-top: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <nav class="nav" aria-label="Program sections">
+      <h2 class="brand">Elbow Pain Walkthrough</h2>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#rules">Rules</a>
+        <a href="#stretches">Stretches</a>
+        <a href="#nerve">Nerve Glides</a>
+        <a href="#loading">Loading</a>
+        <a href="#schedule">Schedule</a>
+      </div>
+    </nav>
+
+    <main class="main">
+      <section id="overview">
+        <h1>Medial Elbow Pain Program</h1>
+        <p class="lede">A click-through guide extracted from Hooper's Beta's medial elbow pain video. Use the buttons on each exercise to load its clip in the player.</p>
+        <div class="meta" aria-label="Video metadata">
+          <span class="pill">Stretches: 09:24-13:20</span>
+          <span class="pill">Nerve glides: 13:20-18:35</span>
+          <span class="pill">Loading: 18:35-23:10</span>
+        </div>
+        <div class="band warning">
+          <strong>Stop or reduce any drill that creates pain, numbness, sharp tingling, or symptoms that linger.</strong>
+          This page summarizes the video and is not medical advice.
+        </div>
+      </section>
+
+      <section id="rules">
+        <h2>Program Rules</h2>
+        <div class="grid">
+          <article class="rule">
+            <h3>Keep aggravation low</h3>
+            <p>Activity should stay around 0-2/10 pain during the activity and for the next 24 hours. If symptoms exceed that, reduce intensity, volume, or change the movement.</p>
+          </article>
+          <article class="rule">
+            <h3>Massage is optional</h3>
+            <p>Soft tissue work may help, but stop it if it irritates symptoms. The video warns that irritated nerves often dislike direct massage.</p>
+          </article>
+          <article class="rule">
+            <h3>Give stretches time</h3>
+            <p>Do the stretches even if they do not create immediate relief. The video says benefits may take a couple of weeks.</p>
+          </article>
+          <article class="rule">
+            <h3>Load conservatively</h3>
+            <p>Start with two rounds of each loading superset per session. Add a third round only after symptoms tolerate the work.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="stretches">
+        <h2>Stretches</h2>
+
+        <article class="exercise" id="flexor">
+          <div class="exercise-header">
+            <div>
+              <span class="phase-label">Stretch 1</span>
+              <h3>Flexor Plus Nerve Mobilization</h3>
+            </div>
+            <span class="tag">09:39-10:20</span>
+          </div>
+          <ol>
+            <li>Start with the elbow gently bent.</li>
+            <li>Pull the fingers back until you feel a gentle forearm stretch.</li>
+            <li>Keep that stretch level while straightening the elbow.</li>
+            <li>Bend the elbow fully again and repeat smoothly.</li>
+          </ol>
+          <p class="dose"><strong>Dosage:</strong> 2-3 sets of 3-5 reps. One rep means one time with the elbow straight and one time with the elbow bent. Hold each position for 3-5 seconds. Do this multiple times per day as tolerated, keeping discomfort or pain at or below 2/10.</p>
+          <div class="actions">
+            <button class="clip-button" data-src="clips/01-flexor-nerve-mobilization.mp4" data-title="Flexor Plus Nerve Mobilization" data-time="09:39-10:20">Watch clip</button>
+          </div>
+        </article>
+
+        <article class="exercise" id="pec-90">
+          <div class="exercise-header">
+            <div>
+              <span class="phase-label">Stretch 2</span>
+              <h3>Pec 90/90 Stretch</h3>
+            </div>
+            <span class="tag">10:42-11:56</span>
+          </div>
+          <ol>
+            <li>Place the hand and forearm on a wall with shoulder and elbow at 90 degrees.</li>
+            <li>Stagger the feet.</li>
+            <li>Lean forward and rotate away until the pec or front shoulder stretches.</li>
+            <li>Drive gently with the back foot instead of hanging on the shoulder.</li>
+          </ol>
+          <p class="dose"><strong>Dosage:</strong> 1 set of 2-3 reps per arm at 90 degrees. Hold each rep for roughly 20-30 seconds. Do this multiple times per day as tolerated, keeping discomfort or pain at or below 2/10. If tingling starts earlier, stop there and let the arm settle.</p>
+          <div class="actions">
+            <button class="clip-button" data-src="clips/02-pec-90-90-stretch.mp4" data-title="Pec 90/90 Stretch" data-time="10:42-11:56">Watch clip</button>
+          </div>
+        </article>
+
+        <article class="exercise" id="pec-120">
+          <div class="exercise-header">
+            <div>
+              <span class="phase-label">Stretch 3</span>
+              <h3>Pec 120 Stretch</h3>
+            </div>
+            <span class="tag">11:56-13:10</span>
+          </div>
+          <ol>
+            <li>Slide the hand higher so the shoulder is around 120 degrees.</li>
+            <li>The forearm may come off the wall.</li>
+            <li>Lean forward and rotate away.</li>
+            <li>Look for a mild stretch in the chest or front shoulder.</li>
+          </ol>
+          <p class="dose"><strong>Dosage:</strong> 1 set of 2-3 reps per arm at 120 degrees. Hold each rep for roughly 20-30 seconds. Do this multiple times per day as tolerated, keeping discomfort or pain at or below 2/10. Avoid pain, numbness, or sharp tingling.</p>
+          <div class="actions">
+            <button class="clip-button" data-src="clips/03-pec-120-stretch.mp4" data-title="Pec 120 Stretch" data-time="11:56-13:10">Watch clip</button>
+          </div>
+        </article>
+      </section>
+
+      <section id="nerve">
+        <h2>Nerve Glides</h2>
+
+        <article class="exercise" id="median-low">
+          <div class="exercise-header">
+            <div>
+              <span class="phase-label">Median nerve</span>
+              <h3>Hands Low: Floss Plus Tension</h3>
+            </div>
+            <span class="tag">13:55-15:20</span>
+          </div>
+          <ol>
+            <li>Start with elbows flexed and fingers curled into loose fists.</li>
+            <li>Straighten the elbows, straighten the fingers, and point the palms back behind you.</li>
+            <li>Look to one side, then the other.</li>
+            <li>Let one arm tension while the other flosses, then switch.</li>
+          </ol>
+          <p class="dose"><strong>Dosage:</strong> 1-2 sets of 3-4 reps. Start 2-3 times per week, then build toward 4-5 times per week as tolerated. Keep discomfort or pain at or below 2/10. Reduce intensity by relaxing the fingers, bending the elbows slightly, or using less head motion.</p>
+          <div class="actions">
+            <button class="clip-button" data-src="clips/04-median-nerve-hands-low.mp4" data-title="Median Nerve, Hands Low" data-time="13:55-15:20">Watch clip</button>
+          </div>
+        </article>
+
+        <article class="exercise" id="median-high">
+          <div class="exercise-header">
+            <div>
+              <span class="phase-label">Median nerve</span>
+              <h3>Hands High: Floss Plus Tension</h3>
+            </div>
+            <span class="tag">15:21-16:10</span>
+          </div>
+          <ol>
+            <li>Start with elbows bent and hands relaxed by your sides.</li>
+            <li>Straighten the elbows.</li>
+            <li>Extend the fingers upward as high as comfortable.</li>
+            <li>Rotate the head side to side.</li>
+          </ol>
+          <p class="dose"><strong>Dosage:</strong> 1-2 sets of 3-4 reps. Start 2-3 times per week, then build toward 4-5 times per week as tolerated. Keep discomfort or pain at or below 2/10. Use less finger height or elbow range if symptoms climb.</p>
+          <div class="actions">
+            <button class="clip-button" data-src="clips/05-median-nerve-hands-high.mp4" data-title="Median Nerve, Hands High" data-time="15:21-16:10">Watch clip</button>
+          </div>
+        </article>
+
+        <article class="exercise" id="ulnar">
+          <div class="exercise-header">
+            <div>
+              <span class="phase-label">Ulnar nerve</span>
+              <h3>Ulnar Nerve Glide</h3>
+            </div>
+            <span class="tag">16:28-18:06</span>
+          </div>
+          <ol>
+            <li>Level 1: hands together, lower them until you feel a light stretch, then move in and out.</li>
+            <li>Level 2: hold the lowered-hand position and look left and right.</li>
+            <li>Level 3: slide the hands toward one side, then the other.</li>
+            <li>Level 4: combine hand sliding with head movement, looking away from the glide direction.</li>
+          </ol>
+          <p class="dose"><strong>Dosage:</strong> 1-2 sets of 3-4 reps. Start 2-3 times per week, then build toward 4-5 times per week as tolerated. Keep discomfort or pain at or below 2/10. Use the lowest level that creates a gentle stretch around the elbow, forearm, palm, ring finger, or pinky.</p>
+          <div class="actions">
+            <button class="clip-button" data-src="clips/06-ulnar-nerve-glide.mp4" data-title="Ulnar Nerve Glide" data-time="16:28-18:06">Watch clip</button>
+          </div>
+        </article>
+      </section>
+
+      <section id="loading">
+        <h2>Loading Supersets</h2>
+        <p>Use these as controlled tissue loading, not a max-strength workout. Keep the 24-hour response calm.</p>
+
+        <article class="exercise" id="superset-1">
+          <div class="exercise-header">
+            <div>
+              <span class="phase-label">Superset 1</span>
+              <h3>Forearm Pronation + Wrist Flexion</h3>
+            </div>
+            <span class="tag">19:10-21:37</span>
+          </div>
+          <ol>
+            <li>For pronation, use a hammer, broomstick, PVC pipe, cable, or similar offset load.</li>
+            <li>Open the hand and let the weight lower to a comfortable position.</li>
+            <li>Rotate through available pronation range without losing control.</li>
+            <li>For wrist flexion, support the forearm, move from extension into flexion, and keep the motion even.</li>
+          </ol>
+          <p class="dose"><strong>Dosage:</strong> Perform this superset 2-3 rounds. Do 8-10 reps of forearm pronation, then 8-10 reps of wrist flexion. Rest briefly or do a stretch/nerve mobilization between rounds. Start with 2 rounds per session, 2-3 times per week, then add a third round as tolerated. Keep about 2 reps in reserve and discomfort or pain at or below 2/10.</p>
+          <div class="actions">
+            <button class="clip-button" data-src="clips/07-pronation-and-wrist-flexion.mp4" data-title="Forearm Pronation + Wrist Flexion" data-time="19:10-21:37">Watch clip</button>
+          </div>
+        </article>
+
+        <article class="exercise" id="superset-2">
+          <div class="exercise-header">
+            <div>
+              <span class="phase-label">Superset 2</span>
+              <h3>Supinating Biceps Curl + Finger Curl</h3>
+            </div>
+            <span class="tag">21:37-22:54</span>
+          </div>
+          <ol>
+            <li>For curls, start thumbs-forward and supinate as you curl up.</li>
+            <li>Use both arms together or alternate.</li>
+            <li>For finger curls, let dumbbells roll down through the fingers until near the end of pinky range.</li>
+            <li>Curl back into a fist without turning it into wrist flexion.</li>
+          </ol>
+          <p class="dose"><strong>Dosage:</strong> Perform this superset 2-3 rounds. Do 8-10 reps of biceps curls, then 8-10 reps of finger curls. Rest briefly or do a stretch/nerve mobilization between rounds. Start with 2 rounds per session, 2-3 times per week, then add a third round as tolerated. Keep about 2 reps in reserve and discomfort or pain at or below 2/10.</p>
+          <div class="actions">
+            <button class="clip-button" data-src="clips/08-biceps-and-finger-curls.mp4" data-title="Supinating Biceps Curl + Finger Curl" data-time="21:37-22:54">Watch clip</button>
+          </div>
+        </article>
+      </section>
+
+      <section id="schedule">
+        <h2>Practical Schedule</h2>
+        <div class="band">
+          <p><strong>Use the per-exercise dosage above.</strong> The stretches can be done multiple times per day as tolerated. Start nerve mobilizations two to three times per week, then build toward four to five times per week. Run the loading supersets two to three times per week if symptoms stay within the 2/10 rule.</p>
+          <p>Keep the first two weeks easy. Use the next-day symptom response to decide whether to progress.</p>
+        </div>
+        <p class="source-note">Source video: <a href="https://youtu.be/fuFyPHI4he4?si=1kPygdY71AL9psm9">How to Fix Medial Elbow Pain</a>. Local source files and extracted clips are in this workspace.</p>
+      </section>
+    </main>
+
+    <aside class="viewer" aria-label="Clip viewer">
+      <div class="viewer-inner">
+        <video id="clip-player" controls preload="metadata" src="clips/01-flexor-nerve-mobilization.mp4"></video>
+        <div class="viewer-text">
+          <h2 id="clip-title">Flexor Plus Nerve Mobilization</h2>
+          <p id="clip-time" class="tag">09:39-10:20</p>
+          <p>Click any exercise's Watch clip button to load its demonstration here.</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    const player = document.querySelector("#clip-player");
+    const title = document.querySelector("#clip-title");
+    const time = document.querySelector("#clip-time");
+
+    document.querySelectorAll(".clip-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        player.src = button.dataset.src;
+        title.textContent = button.dataset.title;
+        time.textContent = button.dataset.time;
+        player.load();
+        player.scrollIntoView({ behavior: "smooth", block: "center" });
+        player.focus();
+      });
+    });
+  </script>
+</body>
+</html>
