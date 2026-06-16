@@ -298,6 +298,138 @@
       font-size: 14px;
     }
 
+    .coach-panel {
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid #c8d3e1;
+      border-radius: 8px;
+      background: #fbfcfe;
+    }
+
+    .coach-top {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .coach-kicker {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .coach-panel h4 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .coach-time {
+      min-width: 70px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: #182027;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+      text-align: center;
+    }
+
+    .coach-visual {
+      position: relative;
+      height: 58px;
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(90deg, #f8fafc 0%, #edf6f2 50%, #f8fafc 100%);
+      overflow: hidden;
+    }
+
+    .coach-visual::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: #cbd5e1;
+    }
+
+    .coach-marker {
+      position: absolute;
+      left: calc(10% + (80% * var(--phase-progress, 0)));
+      top: 10px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
+      transform: translateX(-50%);
+      transition: left 120ms linear, background-color 160ms ease;
+    }
+
+    .coach-progress {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 6px;
+      background: #dbe3ee;
+    }
+
+    .coach-progress span {
+      display: block;
+      width: calc(100% * var(--total-progress, 0));
+      height: 100%;
+      background: var(--green);
+      transition: width 120ms linear;
+    }
+
+    .coach-phase {
+      margin: 12px 0 4px;
+      font-weight: 700;
+    }
+
+    .coach-cue {
+      min-height: 42px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .coach-controls {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .coach-button {
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .coach-button[data-action="start"] {
+      border-color: var(--green);
+      background: var(--green);
+      color: #fff;
+    }
+
+    .coach-button:hover,
+    .coach-button:focus-visible {
+      border-color: #8fa1b6;
+      outline: none;
+    }
+
     .phase-label {
       display: inline-block;
       margin-bottom: 8px;
@@ -424,7 +556,7 @@
       <section id="stretches">
         <h2>Stretches</h2>
 
-        <article class="exercise" id="flexor">
+        <article class="exercise" id="flexor" data-timer-id="flexor">
           <div class="exercise-header">
             <div>
               <span class="phase-label">Stretch 1</span>
@@ -444,7 +576,7 @@
           </div>
         </article>
 
-        <article class="exercise" id="pec-90">
+        <article class="exercise" id="pec-90" data-timer-id="pec-90">
           <div class="exercise-header">
             <div>
               <span class="phase-label">Stretch 2</span>
@@ -464,7 +596,7 @@
           </div>
         </article>
 
-        <article class="exercise" id="pec-120">
+        <article class="exercise" id="pec-120" data-timer-id="pec-120">
           <div class="exercise-header">
             <div>
               <span class="phase-label">Stretch 3</span>
@@ -488,7 +620,7 @@
       <section id="nerve">
         <h2>Nerve Glides</h2>
 
-        <article class="exercise" id="median-low">
+        <article class="exercise" id="median-low" data-timer-id="median-low">
           <div class="exercise-header">
             <div>
               <span class="phase-label">Median nerve</span>
@@ -508,7 +640,7 @@
           </div>
         </article>
 
-        <article class="exercise" id="median-high">
+        <article class="exercise" id="median-high" data-timer-id="median-high">
           <div class="exercise-header">
             <div>
               <span class="phase-label">Median nerve</span>
@@ -528,7 +660,7 @@
           </div>
         </article>
 
-        <article class="exercise" id="ulnar">
+        <article class="exercise" id="ulnar" data-timer-id="ulnar">
           <div class="exercise-header">
             <div>
               <span class="phase-label">Ulnar nerve</span>
@@ -553,7 +685,7 @@
         <h2>Loading Supersets</h2>
         <p>Use these as controlled tissue loading, not a max-strength workout. Keep the 24-hour response calm.</p>
 
-        <article class="exercise" id="superset-1">
+        <article class="exercise" id="superset-1" data-timer-id="superset-1">
           <div class="exercise-header">
             <div>
               <span class="phase-label">Superset 1</span>
@@ -573,7 +705,7 @@
           </div>
         </article>
 
-        <article class="exercise" id="superset-2">
+        <article class="exercise" id="superset-2" data-timer-id="superset-2">
           <div class="exercise-header">
             <div>
               <span class="phase-label">Superset 2</span>
@@ -626,6 +758,30 @@
     </aside>
   </div>
 
+  <template id="coach-template">
+    <section class="coach-panel" aria-label="Guided exercise timer">
+      <div class="coach-top">
+        <div>
+          <span class="coach-kicker">Guided timer</span>
+          <h4 data-role="coach-title"></h4>
+        </div>
+        <div class="coach-time" data-role="coach-time">0:00</div>
+      </div>
+      <div class="coach-visual" aria-hidden="true">
+        <div class="coach-marker" data-role="coach-marker"></div>
+        <div class="coach-progress"><span data-role="coach-progress"></span></div>
+      </div>
+      <p class="coach-phase" data-role="coach-phase"></p>
+      <p class="coach-cue" data-role="coach-cue"></p>
+      <div class="coach-controls">
+        <button class="coach-button" type="button" data-action="start">Start</button>
+        <button class="coach-button" type="button" data-action="pause">Pause</button>
+        <button class="coach-button" type="button" data-action="reset">Reset</button>
+      </div>
+    </section>
+  </template>
+
+  <script type="module" src="./exercise-timers.js?v=transitions-1"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
   <script>
     const VIDEO_ID = "fuFyPHI4he4";
