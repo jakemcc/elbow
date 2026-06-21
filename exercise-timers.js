@@ -2,20 +2,26 @@ const TRANSITION_SECONDS = 2;
 
 const clampProgress = (progress) => Math.max(0, Math.min(1, progress));
 
-const transitionPhase = (label, cue) => ({
+const transitionPhase = (label, cue, seconds = TRANSITION_SECONDS) => ({
   label,
   cue,
-  seconds: TRANSITION_SECONDS,
+  seconds,
   kind: "transition",
 });
 
-const makeAlternatingPhases = (count, seconds, first, second) =>
+const makeAlternatingPhases = (
+  count,
+  seconds,
+  first,
+  second,
+  transitionSeconds = TRANSITION_SECONDS,
+) =>
   Array.from({ length: count }, (_, index) => {
     const odd = index % 2 === 0;
     const rep = Math.floor(index / 2) + 1;
     const side = odd ? first : second;
     return [
-      transitionPhase(`${side.moveLabel} ${rep}`, side.moveCue),
+      transitionPhase(`${side.moveLabel} ${rep}`, side.moveCue, transitionSeconds),
       {
         label: `${side.label} ${rep}`,
         cue: side.cue,
@@ -145,6 +151,7 @@ export const TIMER_PLANS = {
         label: "Look right",
         cue: "Turn right with the same easy range. Relax fingers or elbows if intensity climbs.",
       },
+      3,
     ),
   },
   "median-high": {
@@ -166,6 +173,7 @@ export const TIMER_PLANS = {
         label: "Look right",
         cue: "Turn right smoothly. Lower the fingers if symptoms climb.",
       },
+      3,
     ),
   },
   "ulnar": {

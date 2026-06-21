@@ -55,14 +55,30 @@ test("position-changing movements include short transition phases before holds",
       kind: phase.kind,
     })),
     [
-      { label: "Move left 1", seconds: 2, kind: "transition" },
+      { label: "Move left 1", seconds: 3, kind: "transition" },
       { label: "Look left 1", seconds: 4, kind: undefined },
-      { label: "Move right 1", seconds: 2, kind: "transition" },
+      { label: "Move right 1", seconds: 3, kind: "transition" },
       { label: "Look right 1", seconds: 4, kind: undefined },
     ],
   );
 
-  assert.equal(totalPlanSeconds(medianLow), 48);
+  const medianHigh = TIMER_PLANS["median-high"];
+  assert.deepEqual(
+    medianHigh.phases.slice(0, 4).map((phase) => ({
+      label: phase.label,
+      seconds: phase.seconds,
+      kind: phase.kind,
+    })),
+    [
+      { label: "Move left 1", seconds: 3, kind: "transition" },
+      { label: "Look left 1", seconds: 4, kind: undefined },
+      { label: "Move right 1", seconds: 3, kind: "transition" },
+      { label: "Look right 1", seconds: 4, kind: undefined },
+    ],
+  );
+
+  assert.equal(totalPlanSeconds(medianLow), 56);
+  assert.equal(totalPlanSeconds(medianHigh), 56);
 });
 
 test("transition phases move the marker opposite the normal hold direction", () => {
